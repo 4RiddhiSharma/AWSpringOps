@@ -5,29 +5,30 @@ phases:
     commands:
       - echo "This is prebuild phase"
       - echo $CODEBUILD_BUILD_NUMBER
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 381492254179.dkr.ecr.ap-south-1.amazonaws.com
-  
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 343218215642.dkr.ecr.us-east-1.amazonaws.com
+
   build:
     commands:
       - echo "This is build phase"
       - mvn clean install
       - ls -l target/
-      - docker build . -t aws_spring:v$CODEBUILD_BUILD_NUMBER
+      - docker build . -t java_app:v$CODEBUILD_BUILD_NUMBER
       - docker images
 
   post_build:
     commands:
       - echo "This is post-build phase"
-      - docker tag aws_spring:v$CODEBUILD_BUILD_NUMBER 381492254179.dkr.ecr.ap-south-1.amazonaws.com/aws_spring:v$CODEBUILD_BUILD_NUMBER
-      - docker tag aws_spring:v$CODEBUILD_BUILD_NUMBER 381492254179.dkr.ecr.ap-south-1.amazonaws.com/aws_spring:latest
-      - docker push 381492254179.dkr.ecr.ap-south-1.amazonaws.com/aws_spring:v$CODEBUILD_BUILD_NUMBER
-      - docker push 381492254179.dkr.ecr.ap-south-1.amazonaws.com/aws_spring:latest
-      - printf '[{"name":"springapp","imageUri":"%s"}]' 381492254179.dkr.ecr.ap-south-1.amazonaws.com/aws_spring:v$CODEBUILD_BUILD_NUMBER > imagedefinitions.json
+      - docker tag java_app:v$CODEBUILD_BUILD_NUMBER 343218215642.dkr.ecr.us-east-1.amazonaws.com/java_app:v$CODEBUILD_BUILD_NUMBER
+      - docker tag java_app:v$CODEBUILD_BUILD_NUMBER 343218215642.dkr.ecr.us-east-1.amazonaws.com/java_app:latest
+      - docker push 343218215642.dkr.ecr.us-east-1.amazonaws.com/:v$CODEBUILD_BUILD_NUMBER
+      - docker push 343218215642.dkr.ecr.us-east-1.amazonaws.com/java_app:latest
+      - printf '[{"name":"java_app","imageUri":"%s"}]' 343218215642.dkr.ecr.us-east-1.amazonaws.com/java_app:v$CODEBUILD_BUILD_NUMBER > imagedefinitions.json
       - cat imagedefinitions.json
 
 artifacts:
   files:
     - '**/*'
+
 
 
 
