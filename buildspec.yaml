@@ -20,7 +20,7 @@ phases:
       - echo "This is post-build phase"
       - docker tag java_app:v$CODEBUILD_BUILD_NUMBER 343218215642.dkr.ecr.us-east-1.amazonaws.com/java_app:v$CODEBUILD_BUILD_NUMBER
       - docker tag java_app:v$CODEBUILD_BUILD_NUMBER 343218215642.dkr.ecr.us-east-1.amazonaws.com/java_app:latest
-      - docker push 343218215642.dkr.ecr.us-east-1.amazonaws.com/:v$CODEBUILD_BUILD_NUMBER
+      - docker push 343218215642.dkr.ecr.us-east-1.amazonaws.com/java_app:v$CODEBUILD_BUILD_NUMBER
       - docker push 343218215642.dkr.ecr.us-east-1.amazonaws.com/java_app:latest
       - printf '[{"name":"java_app","imageUri":"%s"}]' 343218215642.dkr.ecr.us-east-1.amazonaws.com/java_app:v$CODEBUILD_BUILD_NUMBER > imagedefinitions.json
       - cat imagedefinitions.json
