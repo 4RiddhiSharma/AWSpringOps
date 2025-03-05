@@ -10,7 +10,7 @@ hooks:
       runas: root
 
   ApplicationStart:
-    - location: scripts/start_springboot.sh  # Script to start your Spring Boot app
+    - location: scripts/start_application.sh  # Script to start your Spring Boot app
       runas: ec2-user
      
   validateService:
