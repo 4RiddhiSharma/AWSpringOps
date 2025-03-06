@@ -1,25 +1,13 @@
 version: 0.0
 os: linux
-files:
-  - source: /target/course-service.jar      # Adjust the source path to your JAR file location
-    destination: /home/ec2-user/myapp/  # Destination path on the EC2 instance
-
 hooks:
-  BeforeInstall:
-    - location: scripts/install_dependencies.sh  # Example script to install dependencies (if needed)
+  ApplicationStop:
+    - location: scripts/stop_container.sh
+      timeout: 300
       runas: root
-
   ApplicationStart:
-    - location: scripts/start_application.sh  # Script to start your Spring Boot app
-      runas: ec2-user
-     
-  validateService:
-    - location: scripts/validate_health.sh  # Script to check if the app is up (health check)
-      runas: ec2-user
-
-permissions:
-  - object: /home/ec2-user/myapp/course-service.jar
-    pattern: "*.jar"
-    permissions: "755"   # Allow read/execute permissions for the JAR file
+    - location: scripts/start_container.sh
+      timeout: 300
+      runas: root
 
 
